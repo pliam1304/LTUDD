@@ -1,0 +1,10 @@
+H:\CodePlace\si sap\Windows Forms\Pha\BaiOnTap1_WDF\Bai2\bin\Debug\Bai2.exe.config
+H:\CodePlace\si sap\Windows Forms\Pha\BaiOnTap1_WDF\Bai2\bin\Debug\Bai2.exe
+H:\CodePlace\si sap\Windows Forms\Pha\BaiOnTap1_WDF\Bai2\bin\Debug\Bai2.pdb
+H:\CodePlace\si sap\Windows Forms\Pha\BaiOnTap1_WDF\Bai2\obj\Debug\Bai2.csproj.AssemblyReference.cache
+H:\CodePlace\si sap\Windows Forms\Pha\BaiOnTap1_WDF\Bai2\obj\Debug\Bai2.MainForm.resources
+H:\CodePlace\si sap\Windows Forms\Pha\BaiOnTap1_WDF\Bai2\obj\Debug\Bai2.Properties.Resources.resources
+H:\CodePlace\si sap\Windows Forms\Pha\BaiOnTap1_WDF\Bai2\obj\Debug\Bai2.csproj.GenerateResource.cache
+H:\CodePlace\si sap\Windows Forms\Pha\BaiOnTap1_WDF\Bai2\obj\Debug\Bai2.csproj.CoreCompileInputs.cache
+H:\CodePlace\si sap\Windows Forms\Pha\BaiOnTap1_WDF\Bai2\obj\Debug\Bai2.exe
+H:\CodePlace\si sap\Windows Forms\Pha\BaiOnTap1_WDF\Bai2\obj\Debug\Bai2.pdb
