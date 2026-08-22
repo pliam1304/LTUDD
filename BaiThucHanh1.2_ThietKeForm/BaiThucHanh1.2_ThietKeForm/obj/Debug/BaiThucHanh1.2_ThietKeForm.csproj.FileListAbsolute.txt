@@ -1,0 +1,14 @@
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\bin\Debug\BaiThucHanh1.2_ThietKeForm.exe.config
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\bin\Debug\BaiThucHanh1.2_ThietKeForm.exe
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\bin\Debug\BaiThucHanh1.2_ThietKeForm.pdb
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1.2_ThietKeForm.csproj.AssemblyReference.cache
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1._2_ThietKeForm.frmBai1.resources
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1._2_ThietKeForm.frmChinh.resources
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1._2_ThietKeForm.Properties.Resources.resources
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1.2_ThietKeForm.csproj.GenerateResource.cache
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1.2_ThietKeForm.csproj.CoreCompileInputs.cache
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1.2_ThietKeForm.exe
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1.2_ThietKeForm.pdb
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1._2_ThietKeForm.frmBai2.resources
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1._2_ThietKeForm.frmBai3.resources
+H:\CodePlace\si sap\Windows Forms\Pha\BaiThucHanh1.2_ThietKeForm\BaiThucHanh1.2_ThietKeForm\obj\Debug\BaiThucHanh1._2_ThietKeForm.frmBai4.resources
