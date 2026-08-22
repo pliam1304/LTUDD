@@ -1,0 +1,10 @@
+H:\CodePlace\si sap\Windows Forms\BaiTapBuoi2_2411869\BaiTapBuoi2_2411869\bin\Debug\BaiTapBuoi2_2411869.exe.config
+H:\CodePlace\si sap\Windows Forms\BaiTapBuoi2_2411869\BaiTapBuoi2_2411869\bin\Debug\BaiTapBuoi2_2411869.exe
+H:\CodePlace\si sap\Windows Forms\BaiTapBuoi2_2411869\BaiTapBuoi2_2411869\bin\Debug\BaiTapBuoi2_2411869.pdb
+H:\CodePlace\si sap\Windows Forms\BaiTapBuoi2_2411869\BaiTapBuoi2_2411869\obj\Debug\BaiTapBuoi2_2411869.csproj.AssemblyReference.cache
+H:\CodePlace\si sap\Windows Forms\BaiTapBuoi2_2411869\BaiTapBuoi2_2411869\obj\Debug\BaiTapBuoi2_2411869.Form1.resources
+H:\CodePlace\si sap\Windows Forms\BaiTapBuoi2_2411869\BaiTapBuoi2_2411869\obj\Debug\BaiTapBuoi2_2411869.Properties.Resources.resources
+H:\CodePlace\si sap\Windows Forms\BaiTapBuoi2_2411869\BaiTapBuoi2_2411869\obj\Debug\BaiTapBuoi2_2411869.csproj.GenerateResource.cache
+H:\CodePlace\si sap\Windows Forms\BaiTapBuoi2_2411869\BaiTapBuoi2_2411869\obj\Debug\BaiTapBuoi2_2411869.csproj.CoreCompileInputs.cache
+H:\CodePlace\si sap\Windows Forms\BaiTapBuoi2_2411869\BaiTapBuoi2_2411869\obj\Debug\BaiTapBuoi2_2411869.exe
+H:\CodePlace\si sap\Windows Forms\BaiTapBuoi2_2411869\BaiTapBuoi2_2411869\obj\Debug\BaiTapBuoi2_2411869.pdb
