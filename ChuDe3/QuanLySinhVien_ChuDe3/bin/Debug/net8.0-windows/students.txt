@@ -1,0 +1,4 @@
+2110001	Nguyễn Văn An	K21	079202001234	0901234567	Đà Lạt	Nam	15/04/2003	Lập trình C#,Cơ sở dữ liệu
+2110002	Trần Thị Bảo	K21	079303005678	0912345678	Bảo Lộc	Nữ	20/09/2003	Lập trình C#,Mạng máy tính
+2210001	Lê Hoàng Cường	K22	079404009012	0923456789	Đức Trọng	Nam	10/11/2004	Cấu trúc dữ liệu
+2411849	Huy Nguyễn Quốc Đình	K21	036363636363	0363636363	Đà Lạt	Nam	15/04/2003	Lập trình C#,Cơ sở dữ liệu
