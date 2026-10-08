@@ -100,6 +100,29 @@ namespace QuanLySinhVien_ChuDe3
             return soLuong;
         }
 
+        /// <summary>Đếm số sinh viên đang đăng ký một môn học.</summary>
+        public int DemSinhVienDangKy(string tenMon)
+        {
+            return DanhSach.FindAll(sv =>
+                sv.MonDangKy.Exists(m => m.Equals(tenMon, StringComparison.OrdinalIgnoreCase))).Count;
+        }
+
+        /// <summary>
+        /// Gỡ một môn khỏi đăng ký của tất cả sinh viên (dùng khi xóa môn khỏi danh mục).
+        /// Trả về số sinh viên bị ảnh hưởng, có lưu file nếu có thay đổi.
+        /// </summary>
+        public int GoMonKhoiTatCa(string tenMon)
+        {
+            int soSV = 0;
+            foreach (SinhVien sv in DanhSach)
+            {
+                if (sv.MonDangKy.RemoveAll(m => m.Equals(tenMon, StringComparison.OrdinalIgnoreCase)) > 0)
+                    soSV++;
+            }
+            if (soSV > 0) LuuFile();
+            return soSV;
+        }
+
         /// <summary>
         /// Tìm kiếm sinh viên theo một hoặc nhiều điều kiện (MSSV/Tên/Lớp).
         /// Điều kiện nào để trống sẽ được bỏ qua (kết hợp AND các điều kiện có nhập).

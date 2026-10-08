@@ -393,6 +393,8 @@ namespace QuanLySinhVien_ChuDe3
             // clbMonDangKy
             //
             this.clbMonDangKy.CheckOnClick = true;
+            this.clbMonDangKy.ColumnWidth = 230;
+            this.clbMonDangKy.MultiColumn = true;
             this.clbMonDangKy.ContextMenuStrip = this.cmsMon;
             this.clbMonDangKy.Location = new System.Drawing.Point(100, 127);
             this.clbMonDangKy.Name = "clbMonDangKy";
@@ -404,6 +406,7 @@ namespace QuanLySinhVien_ChuDe3
             this.cmsMon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.cmsMonThem, this.cmsMonXoa });
             this.cmsMon.Name = "cmsMon";
             this.cmsMon.Size = new System.Drawing.Size(180, 48);
+            this.cmsMon.Opening += new System.ComponentModel.CancelEventHandler(this.cmsMon_Opening);
             //
             // cmsMonThem
             //

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -9,6 +11,13 @@ namespace QuanLySinhVien_ChuDe3
     {
         private readonly QuanLySinhVien qlsv = new QuanLySinhVien();
         private const string TEN_FILE_MAC_DINH = "students.txt";
+
+        // Danh mục toàn bộ môn học (luôn hiển thị đủ trên CheckedListBox, lưu trong monhoc.txt)
+        private readonly DanhMucMonHoc danhMuc =
+            new DanhMucMonHoc(Path.Combine(Application.StartupPath, "monhoc.txt"));
+
+        // Vị trí môn học dưới con trỏ chuột khi mở ContextMenu (để biết xóa môn nào)
+        private int viTriMonDuoiChuot = -1;
 
         public frmSinhVien()
         {
@@ -36,6 +45,10 @@ namespace QuanLySinhVien_ChuDe3
                 // Không có sẵn tập tin -> tạo tập tin văn bản rỗng để chương trình có nơi lưu
                 qlsv.LuuFile(duongDan);
             }
+
+            // Nạp danh mục môn học để CheckedListBox luôn có đủ các môn ngay từ đầu
+            danhMuc.Nap();
+            NapDanhMucMon();
 
             HienThi(qlsv.DanhSach);
             CapNhatStatusStrip();
@@ -75,8 +88,9 @@ namespace QuanLySinhVien_ChuDe3
 
         private SinhVien LaySinhVienTuForm()
         {
+            // Chỉ lấy những môn đang được TÍCH CHỌN làm môn đăng ký của sinh viên
             List<string> monDaChon = new List<string>();
-            foreach (var item in clbMonDangKy.Items)
+            foreach (var item in clbMonDangKy.CheckedItems)
                 monDaChon.Add(item?.ToString() ?? "");
 
             return new SinhVien(
@@ -90,9 +104,6 @@ namespace QuanLySinhVien_ChuDe3
                 rdNam.Checked,
                 monDaChon
             );
-            // Lưu ý: ở đây lưu toàn bộ danh sách môn hiển thị trên CheckedListBox làm
-            // "môn đăng ký" cho đơn giản hoá phần thao tác chọn môn; có thể đổi thành
-            // clbMonDangKy.CheckedItems nếu muốn chỉ lưu các môn được tích chọn.
         }
 
         private void GanSinhVienLenForm(SinhVien sv)
@@ -107,9 +118,50 @@ namespace QuanLySinhVien_ChuDe3
             rdNam.Checked = sv.GioiTinh;
             rdNu.Checked = !sv.GioiTinh;
 
+            // Danh mục môn giữ nguyên, chỉ tích / bỏ tích theo môn sinh viên này đã đăng ký
+            TichMonDangKy(sv.MonDangKy);
+        }
+
+        /// <summary>
+        /// Nạp lại toàn bộ danh mục môn học lên CheckedListBox (tất cả để trạng thái chưa tích).
+        /// Có gộp thêm các môn mà sinh viên đã đăng ký nhưng chưa có trong danh mục.
+        /// </summary>
+        private void NapDanhMucMon()
+        {
+            danhMuc.GopTuSinhVien(qlsv.DanhSach);
+
+            clbMonDangKy.BeginUpdate();
             clbMonDangKy.Items.Clear();
-            foreach (string mon in sv.MonDangKy)
-                clbMonDangKy.Items.Add(mon, true);
+            foreach (string mon in danhMuc.DanhSach)
+                clbMonDangKy.Items.Add(mon, false);
+            clbMonDangKy.EndUpdate();
+        }
+
+        /// <summary>
+        /// Tích những môn có trong danh sách đã đăng ký, bỏ tích các môn còn lại.
+        /// Không thêm / xóa môn nào khỏi CheckedListBox.
+        /// </summary>
+        private void TichMonDangKy(IEnumerable<string> monDaDangKy)
+        {
+            HashSet<string> tap = new HashSet<string>(monDaDangKy, StringComparer.OrdinalIgnoreCase);
+
+            clbMonDangKy.BeginUpdate();
+            for (int i = 0; i < clbMonDangKy.Items.Count; i++)
+            {
+                string ten = clbMonDangKy.Items[i]?.ToString() ?? "";
+                clbMonDangKy.SetItemChecked(i, tap.Contains(ten));
+            }
+            clbMonDangKy.EndUpdate();
+        }
+
+        /// <summary>Cập nhật lại cột "Môn đăng ký" của ListView mà không dựng lại danh sách.</summary>
+        private void LamMoiCotMonDangKy()
+        {
+            foreach (ListViewItem item in lvSinhVien.Items)
+            {
+                if (item.Tag is SinhVien sv && item.SubItems.Count > 8)
+                    item.SubItems[8].Text = string.Join(", ", sv.MonDangKy);
+            }
         }
 
         private void ResetControls()
@@ -122,7 +174,7 @@ namespace QuanLySinhVien_ChuDe3
             txtDiaChi.Text = "";
             dtpNgaySinh.Value = DateTime.Now;
             rdNam.Checked = true;
-            clbMonDangKy.Items.Clear();
+            TichMonDangKy(Array.Empty<string>()); // bỏ tích hết nhưng vẫn giữ nguyên danh mục môn
         }
 
         /// <summary>
@@ -271,26 +323,66 @@ namespace QuanLySinhVien_ChuDe3
 
         #region Sự kiện: Môn đăng ký (ContextMenu thêm / xóa môn)
 
-        private void cmsMonThem_Click(object sender, EventArgs e)
+        // Mở menu: xác định môn nằm dưới con trỏ chuột để "Xóa môn" đúng môn được nhấp chuột phải
+        private void cmsMon_Opening(object? sender, CancelEventArgs e)
         {
-            using frmThemMon frm = new frmThemMon();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                if (!clbMonDangKy.Items.Contains(frm.TenMon))
-                    clbMonDangKy.Items.Add(frm.TenMon, true);
-                else
-                    MessageBox.Show("Môn học này đã có trong danh sách!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            Point p = clbMonDangKy.PointToClient(Cursor.Position);
+            int vitri = clbMonDangKy.IndexFromPoint(p);
+
+            // Mở bằng bàn phím (con trỏ không nằm trên control) -> dùng môn đang được chọn
+            if (vitri < 0 && !clbMonDangKy.ClientRectangle.Contains(p))
+                vitri = clbMonDangKy.SelectedIndex;
+
+            viTriMonDuoiChuot = vitri;
+
+            bool coMon = vitri >= 0 && vitri < clbMonDangKy.Items.Count;
+            cmsMonXoa.Enabled = coMon;
+            cmsMonXoa.Text = coMon
+                ? $"Xóa môn \"{clbMonDangKy.Items[vitri]}\""
+                : "Xóa môn";
         }
 
-        private void cmsMonXoa_Click(object sender, EventArgs e)
+        private void cmsMonThem_Click(object? sender, EventArgs e)
         {
-            if (clbMonDangKy.SelectedItem == null)
+            using frmThemMon frm = new frmThemMon();
+            if (frm.ShowDialog() != DialogResult.OK) return;
+
+            string tenMon = frm.TenMon;
+            if (danhMuc.TonTai(tenMon))
             {
-                MessageBox.Show("Vui lòng chọn môn học cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Môn học này đã có trong danh sách!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            clbMonDangKy.Items.Remove(clbMonDangKy.SelectedItem);
+
+            danhMuc.Them(tenMon);                    // thêm vào danh mục (lưu monhoc.txt)
+            clbMonDangKy.Items.Add(tenMon, true);    // hiển thị luôn và tích sẵn cho sinh viên đang nhập
+        }
+
+        private void cmsMonXoa_Click(object? sender, EventArgs e)
+        {
+            int vitri = viTriMonDuoiChuot;
+            if (vitri < 0 || vitri >= clbMonDangKy.Items.Count)
+            {
+                MessageBox.Show("Vui lòng nhấp chuột phải vào môn học cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string tenMon = clbMonDangKy.Items[vitri]?.ToString() ?? "";
+            int soSV = qlsv.DemSinhVienDangKy(tenMon);
+
+            string noiDung = soSV > 0
+                ? $"Xóa môn \"{tenMon}\" khỏi danh mục?\nMôn này cũng sẽ bị gỡ khỏi đăng ký của {soSV} sinh viên."
+                : $"Xóa môn \"{tenMon}\" khỏi danh mục?";
+
+            if (MessageBox.Show(noiDung, "Xác nhận xóa môn", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            qlsv.GoMonKhoiTatCa(tenMon);   // gỡ khỏi đăng ký của mọi sinh viên (có lưu file)
+            danhMuc.Xoa(tenMon);           // gỡ khỏi danh mục (lưu monhoc.txt)
+            clbMonDangKy.Items.RemoveAt(vitri);
+            viTriMonDuoiChuot = -1;
+
+            LamMoiCotMonDangKy();
         }
 
         #endregion
@@ -325,6 +417,7 @@ namespace QuanLySinhVien_ChuDe3
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 qlsv.TaiTuFile(ofd.FileName);
+                NapDanhMucMon();
                 HienThi(qlsv.DanhSach);
                 ResetControls();
             }
