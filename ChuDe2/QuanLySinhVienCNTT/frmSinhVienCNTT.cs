@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -8,13 +8,13 @@ namespace QuanLySinhVienCNTT
 {
     public partial class frmSinhVienCNTT : Form
     {
-        private ArrayList dsSV;
+        private List<SinhVien> dsSV;
         private bool isModified = false;
 
         public frmSinhVienCNTT()
         {
             InitializeComponent();
-            dsSV = new ArrayList();
+            dsSV = new List<SinhVien>();
         }
 
         private void DocTuFile(string filename)
@@ -78,7 +78,7 @@ namespace QuanLySinhVienCNTT
         private void LuuVaoFile(string filename)
         {
             string filePath = filename;
-            System.Collections.Generic.List<string> lines = new System.Collections.Generic.List<string>();
+            List<string> lines = new List<string>();
             foreach (SinhVien sv in dsSV)
             {
                 string line = string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}",
@@ -210,15 +210,7 @@ namespace QuanLySinhVienCNTT
                 return;
             }
 
-            SinhVien? svExist = null;
-            foreach (SinhVien s in dsSV)
-            {
-                if (s.MSSV.Equals(svForm.MSSV, StringComparison.OrdinalIgnoreCase))
-                {
-                    svExist = s;
-                    break;
-                }
-            }
+            SinhVien? svExist = dsSV.Find(s => s.MSSV.Equals(svForm.MSSV, StringComparison.OrdinalIgnoreCase));
             if (svExist != null)
             {
                 // Cập nhật sinh viên đã có
@@ -258,15 +250,7 @@ namespace QuanLySinhVienCNTT
             {
                 ListViewItem item = lvSinhVien.SelectedItems[0];
                 string mssv = item.SubItems[0].Text;
-                SinhVien? sv = null;
-                foreach (SinhVien s in dsSV)
-                {
-                    if (s.MSSV == mssv)
-                    {
-                        sv = s;
-                        break;
-                    }
-                }
+                SinhVien? sv = dsSV.Find(s => s.MSSV == mssv);
                 if (sv != null)
                 {
                     ThietLapThongTinForm(sv);
@@ -281,12 +265,7 @@ namespace QuanLySinhVienCNTT
                 foreach (ListViewItem item in lvSinhVien.SelectedItems)
                 {
                     string mssv = item.SubItems[0].Text;
-                    for (int i = dsSV.Count - 1; i >= 0; i--)
-                    {
-                        SinhVien s = (SinhVien)dsSV[i]!;
-                        if (s.MSSV == mssv)
-                            dsSV.RemoveAt(i);
-                    }
+                    dsSV.RemoveAll(s => s.MSSV == mssv);
                 }
                 isModified = true;
                 LoadListView();
